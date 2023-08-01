@@ -161,4 +161,19 @@ class UsersController extends Controller
             'message' => 'Shopping cart linked to the user.'
         ]);
     }
+
+    public function getUserOrders($id)
+    {
+        // Find the user by ID
+        $user = User::findOrFail($id);
+
+        // Retrieve the orders associated with the user
+        $orders = $user->orders;
+
+        // Return a response with the orders data
+        return response()->json([
+            'data' => $orders,
+            'message' => 'Orders linked to the user.'
+        ]);
+    }
 }
