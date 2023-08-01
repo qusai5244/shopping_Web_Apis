@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ShoppingCart;
 
 class UsersController extends Controller
 {
@@ -50,10 +51,12 @@ class UsersController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password= bcrypt($request->password);
-
-        // Save the user
+        $user->password = bcrypt($request->password);
         $user->save();
+
+        // Create and associate a new shopping cart with the user
+        $shoppingCart = new ShoppingCart();
+        $user->shoppingCart()->save($shoppingCart);
 
         // Return a response with a resource JSON
         return response()->json([
@@ -61,6 +64,7 @@ class UsersController extends Controller
             'message' => 'User created successfully!'
         ], 201);
     }
+
 
     /**
      * Display the specified resource.
@@ -71,7 +75,7 @@ class UsersController extends Controller
     public function show($id)
     {
         // Get the user
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $user = $user->only(['name', 'email']);
         // Return a response with a resource JSON
         return response()->json([
@@ -109,7 +113,7 @@ class UsersController extends Controller
         ]);
 
         // Create a new user
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password= bcrypt($request->password);
@@ -141,6 +145,20 @@ class UsersController extends Controller
             'message' => 'User deleted successfully!'
         ], 200);
 
-        // give the api route ?_method=DELETE
+    }
+
+    public function getUserCart($id)
+    {
+        // Find the user by ID
+        $user = User::findOrFail($id);
+
+        // Retrieve the shopping cart associated with the user
+        $shoppingCart = $user->shoppingCart;
+
+        // Return a response with the shopping cart data
+        return response()->json([
+            'data' => $shoppingCart,
+            'message' => 'Shopping cart linked to the user.'
+        ]);
     }
 }

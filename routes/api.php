@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ShoppingCartController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::get('/users', [UsersController::class, 'index']);
-Route::resource('users', UsersController::class);
+
+Route::resource('users', UsersController::class); // User API
+
+Route::get('users/shopping-cart/{cart_id}', [UsersController::class, 'getUserCart']); // Get user's shopping cart
+
+Route::get('shopping-cart/{cart_id}', [ShoppingCartController::class, 'getUser']); // Get user's shopping cart
+
+
 
