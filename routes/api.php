@@ -26,14 +26,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('users', UsersController::class); // User API
 
-Route::get('users/orders/{id}', [UsersController::class, 'getUserOrders']); // Get user's shopping cart
+Route::resource('products', ProductsController::class); // Product API
 
+Route::get('shopping-carts', [ShoppingCartController::class,'index']); // Shopping Cart API
 
-Route::resource('products', ProductsController::class); // products API
-
-Route::resource('orders', OrderController::class); // Order API
-
-Route::get('shopping-cart/{cart_id}', [ShoppingCartController::class, 'getUser']); // Get user's shopping cart
 
 
 

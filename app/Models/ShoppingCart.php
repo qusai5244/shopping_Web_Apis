@@ -14,4 +14,9 @@ class ShoppingCart extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function shoppingCartItems()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

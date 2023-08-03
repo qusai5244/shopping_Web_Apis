@@ -17,7 +17,7 @@ class ProductsController extends Controller
     {
         $products = Product::all();
         // how to return products as json
-        return response()->json([$products]);
+        return response()->json($products);
     }
 
     /**
@@ -129,6 +129,17 @@ class ProductsController extends Controller
         return response()->json([
             'data' => $product,
             'message' => 'Product deleted successfully!'
+        ], 200);
+    }
+
+    public function add_product_to_cart($user_id, $product_id)
+    {
+        $product = Product::find($product_id);
+        $shoppingCart = user::find($user_id)->shoppingCart;
+        $shoppingCart->products()->attach($product_id);
+        return response()->json([
+            'data' => $product,
+            'message' => 'Product added to cart successfully!'
         ], 200);
     }
 }
