@@ -54,10 +54,6 @@ class UsersController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        // Create and associate a new shopping cart with the user
-        $shoppingCart = new ShoppingCart();
-        $user->shoppingCart()->save($shoppingCart);
-
         // Return a response with a resource JSON
         return response()->json([
             'data' => $user,

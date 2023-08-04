@@ -30,6 +30,15 @@ Route::resource('products', ProductsController::class); // Product API
 
 Route::get('shopping-carts', [ShoppingCartController::class,'index']); // Shopping Cart API
 
+Route::post('add-to-cart/{user_id}/{product_id}', [ShoppingCartController::class,'store']); // Shopping Cart API
+
+Route::get('my-cart/{user_id}', [ShoppingCartController::class,'show_my_cart']); // Shopping Cart API
+
+Route::post('my-cart/remove-product/{user_id}/{product_id}', [ShoppingCartController::class,'remove_product']); // Shopping Cart API
+
+Route::post('my-cart/checkout/{user_id}', [ShoppingCartController::class,'checkout']); // Shopping Cart API
+
+Route::post('payment/{status}', [ShoppingCartController::class,'thawaniCallBack']); // Shopping Cart API
 
 
 

@@ -40,14 +40,14 @@ class ProductsController extends Controller
     {
         // Validate the input data
         $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0'
+            'product_name' => 'required|string|max:255',
+            'product_price' => 'required|numeric|min:0'
         ]);
 
         // Create a new product
         $product = new Product();
-        $product->product_name = $request->name;
-        $product->product_price = $request->price;
+        $product->product_name = $request->product_name;
+        $product->product_price = $request->product_price;
         $product->save();
 
         // Return a response with a resource JSON
@@ -70,7 +70,6 @@ class ProductsController extends Controller
         // Return a response with a resource JSON
         return response()->json([
             'data' => $product,
-            'message' => 'Product retrieved successfully!'
         ], 200);
     }
 
